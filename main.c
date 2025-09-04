@@ -15,7 +15,7 @@ void clear_term();
 struct CompFile fetch_file(char *path);
 void display_content(struct CompFile comp_f);
 void edit_line(struct CompFile comp_f, int curr_line);
-
+void display_line(struct CompFile comp_f, int n_line);
 
 int main(int charc, char *charv[])
 {
@@ -31,6 +31,13 @@ int main(int charc, char *charv[])
 
     if (strcmp(comm, "q") == 0) return 1;
     else if (strcmp(comm, "v") == 0) display_content(fetch_c);
+    else if (strncmp(comm, "v=", 2) == 0)
+    {
+      char *n_comm = comm; 
+      n_comm++; n_comm++;
+      int v_int = atoi(n_comm);
+      display_line(fetch_c, v_int);
+    }
     else if (strncmp(comm, "i=", 2) == 0) 
     {
       char *loc_comm = comm;
@@ -104,4 +111,10 @@ void eat_buffer()
 {
   int ch;
   while ((ch = getchar()) != '\n' && ch != EOF);
+}
+
+
+void display_line(struct CompFile comp_f, int n_line)
+{
+  printf("%s\n", comp_f.contents[n_line - 1]);
 }
