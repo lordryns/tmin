@@ -11,7 +11,8 @@ struct CompFile{
 
 
 void eat_buffer();
-void clear_term(); 
+void clear_term();
+void show_help();
 struct CompFile fetch_file(char *path);
 void display_content(struct CompFile comp_f);
 void edit_line(struct CompFile comp_f, int curr_line);
@@ -30,6 +31,10 @@ int main(int charc, char *charv[])
       eat_buffer();
 
     if (strcmp(comm, "q") == 0) return 1;
+    else if (strcmp(comm, "cls") == 0) clear_term();
+    else if (strcmp(comm, "h") == 0) {
+      show_help();
+    }
     else if (strcmp(comm, "v") == 0) display_content(fetch_c);
     else if (strncmp(comm, "v=", 2) == 0)
     {
@@ -100,10 +105,11 @@ struct CompFile fetch_file(char *path)
 
 void edit_line(struct CompFile comp_f, int curr_line)
 {
+  int n_line = curr_line - 1;
   char buf[1024];
   printf("> "); fgets(buf, 1024, stdin);
-  printf("%s", buf);
-  
+  comp_f.contents[n_line] = strdup(buf);
+  if (n_line > comp_f.len) comp_f.len = n_line; 
 }
 
 
@@ -116,5 +122,19 @@ void eat_buffer()
 
 void display_line(struct CompFile comp_f, int n_line)
 {
-  printf("%s\n", comp_f.contents[n_line - 1]);
+  printf("%d. %s\n", n_line, comp_f.contents[n_line - 1]);
+}
+
+
+void show_help()
+{
+  printf("basic commands:\n");
+  printf("h   -> display this message\n");
+  printf("q   -> exit application with 1\n");
+  printf("v   -> display the entire file\n");
+  printf("cls -> clear stdin\n\n");
+
+  printf("specific commands:\n");
+  printf("v=<line>  -> show specific line\n");
+  printf("i=<line>  -> insert into line\n");
 }
