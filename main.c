@@ -13,7 +13,7 @@ void clear_term();
 void show_help();
 struct CompFile fetch_file(char *path);
 void display_content(struct CompFile comp_f);
-void edit_line(struct CompFile comp_f, int curr_line);
+void edit_line(struct CompFile *comp_f, int curr_line);
 void display_line(struct CompFile comp_f, int n_line);
 
 int main(int charc, char *charv[]) {
@@ -46,7 +46,7 @@ int main(int charc, char *charv[]) {
         loc_comm++;
         loc_comm++;
         int f_int = atoi(loc_comm);
-        edit_line(fetch_c, f_int);
+        edit_line(&fetch_c, f_int);
       } else if (strcmp(comm, "i") == 0)
         printf("??: wrong usage of i, use i=<line> instead.\n");
       else
@@ -99,15 +99,15 @@ struct CompFile fetch_file(char *path) {
   return comp_f;
 }
 
-void edit_line(struct CompFile comp_f, int curr_line) {
+void edit_line(struct CompFile *comp_f, int curr_line) {
   int n_line = curr_line - 1;
   char buf[1024];
   printf("> ");
   fgets(buf, 1024, stdin);
-  comp_f.contents[n_line] = strdup(buf);
+  comp_f->contents[n_line] = strdup(buf);
 
-  if (n_line >= comp_f.len)
-    comp_f.len = n_line + 1;
+  if (curr_line > (*comp_f).len)
+    comp_f->len = curr_line;
 }
 
 void eat_buffer() {
