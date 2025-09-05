@@ -62,7 +62,11 @@ void display_content(struct CompFile comp_f) {
   printf("%d\n", comp_f.len);
   for (int i = 0; i < comp_f.len; i++) {
     char *curr_line = comp_f.contents[i];
-    printf("%d. %s", i + 1, curr_line);
+
+    if (curr_line == NULL)
+      printf("%d.\n", i + 1);
+    else
+      printf("%d. %s", i + 1, curr_line);
   }
 }
 
@@ -77,7 +81,7 @@ void clear_term() {
 struct CompFile fetch_file(char *path) {
   char file_state = 'r';
   FILE *fptr;
-  char **contents = malloc(1024 * sizeof(char *));
+  char **contents = calloc(1024, 1024 * sizeof(char *));
   char buf[1024];
   fptr = fopen(path, "r");
   if (fptr == NULL) {
