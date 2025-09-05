@@ -75,11 +75,15 @@ void clear_term() {
 }
 
 struct CompFile fetch_file(char *path) {
+  char file_state = 'r';
   FILE *fptr;
   char **contents = malloc(1024 * sizeof(char *));
   char buf[1024];
   fptr = fopen(path, "r");
-
+  if (fptr == NULL) {
+    fptr = fopen(path, "w");
+    file_state = 'w';
+  }
   int count_ln = 0;
   while (fgets(buf, sizeof(buf), fptr) != NULL) {
     contents[count_ln] = strdup(buf);
@@ -91,6 +95,7 @@ struct CompFile fetch_file(char *path) {
   comp_f.contents = contents;
   comp_f.len = count_ln;
 
+  printf("%c: %s\n", file_state, path);
   return comp_f;
 }
 
