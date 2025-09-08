@@ -72,8 +72,8 @@ There are 2 states in Tmin
 5. **Save to file (w)**
 
 Specific commands include:
-1. **Insert/Replace a line (i=<line>)**
-2. **View line content (v=<line>)**
+1. **Insert/Replace a line (i=line_number)**
+2. **View line content (v=line_number)**
 
 And that's everything!
 
