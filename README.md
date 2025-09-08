@@ -70,6 +70,7 @@ There are 2 states in Tmin
 3. **View entire buffer (v)**
 4. **Clear shell (cls)**
 5. **Save to file (w)**
+6. **Get number of lines (ln)**
 
 Specific commands include:
 1. **Insert/Replace a line (i=line_number)**
