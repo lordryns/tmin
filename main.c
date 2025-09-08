@@ -177,5 +177,5 @@ void show_help() {
 }
 
 void show_number_of_lines(struct CompFile comp_f) {
-  printf("len: %d\n", comp_f.len);
+  printf("len: %dL\n", comp_f.len);
 }
