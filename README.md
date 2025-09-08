@@ -50,4 +50,31 @@ clang main.c -o tmin
 *note* that it should be `tmin.exe` if you're on windows.
 
 
+## Stuff you should know 
+
+This is mostly just basic stuff you should know, nothing too difficult 
+
+### States 
+
+There are 2 states in Tmin
+
+**The command state (+):**
+    Use this to enter editor commands
+
+**The Input state (>):** 
+    Use this to enter file input 
+
+### Commands 
+1. **Quit (q)**
+2. **Help (h)**
+3. **View entire buffer (v)**
+4. **Clear shell (cls)**
+5. **Save to file (w)**
+
+Specific commands include:
+1. **Insert/Replace a line (i=<line>)**
+2. **View line content (v=<line>)**
+
+And that's everything!
+
 Happy hacking :)
