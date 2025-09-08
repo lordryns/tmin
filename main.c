@@ -4,6 +4,7 @@
 #include <string.h>
 
 struct CompFile {
+  char *path;
   char **contents;
   int len;
 };
@@ -15,6 +16,7 @@ struct CompFile fetch_file(char *path);
 void display_content(struct CompFile comp_f);
 void edit_line(struct CompFile *comp_f, int curr_line);
 void display_line(struct CompFile comp_f, int n_line);
+void save_to_file(struct CompFile comp_f);
 
 int main(int charc, char *charv[]) {
   char comm[20];
@@ -49,22 +51,31 @@ int main(int charc, char *charv[]) {
         edit_line(&fetch_c, f_int);
       } else if (strcmp(comm, "i") == 0)
         printf("??: wrong usage of i, use i=<line> instead.\n");
+      else if (strcmp(comm, "w") == 0) {
+        save_to_file(fetch_c);
+      }
       else
         printf("??: '%s' -> invalid, use [h] for help.\n", comm);
     }
   } else {
-    printf("Not enough arguments!\n");
+    printf("tmin takes a filename argument: none provided!\n");
   }
   return 0;
 }
 
 void display_content(struct CompFile comp_f) {
-  printf("%d\n", comp_f.len);
+  if (comp_f.len < 1) {
+    printf("%d\n", comp_f.len);
+  }
   for (int i = 0; i < comp_f.len; i++) {
     char *curr_line = comp_f.contents[i];
 
     if (curr_line == NULL)
       printf("%d.\n", i + 1);
+    else if (strcmp(curr_line, "(null)") == 0) {
+    
+      printf("%d.\n", i + 1);
+    }
     else
       printf("%d. %s", i + 1, curr_line);
   }
@@ -96,6 +107,7 @@ struct CompFile fetch_file(char *path) {
   fclose(fptr);
 
   struct CompFile comp_f;
+  comp_f.path = path;
   comp_f.contents = contents;
   comp_f.len = count_ln;
 
@@ -124,14 +136,37 @@ void display_line(struct CompFile comp_f, int n_line) {
   printf("%d. %s\n", n_line, comp_f.contents[n_line - 1]);
 }
 
+
+
+void save_to_file(struct CompFile comp_f) {
+  FILE *fptr;
+  fptr = fopen(comp_f.path, "w");
+  fprintf(fptr, "");
+
+  fptr = fopen(comp_f.path, "a");
+
+  for (int i=0; i < comp_f.len; i++) {
+    if (comp_f.contents[i] == NULL) {
+      fprintf(fptr, "\n");
+    } else {
+      fprintf(fptr, "%s", comp_f.contents[i]);
+    }
+  }
+  fclose(fptr);
+
+  printf("w: %d lines written!\n", comp_f.len);
+}
+
 void show_help() {
   printf("basic commands:\n");
   printf("h   -> display this message\n");
   printf("q   -> exit application with 1\n");
   printf("v   -> display the entire file\n");
   printf("cls -> clear stdin\n\n");
+  printf("w   -> Save file\n");
 
   printf("specific commands:\n");
   printf("v=<line>  -> show specific line\n");
   printf("i=<line>  -> insert into line\n");
 }
+
