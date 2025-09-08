@@ -17,7 +17,7 @@ Just go to the releases and download the .exe or .tar.gz file and you're set
 Run 
 
 ```bash 
-bash <(curl -s https://raw.githubusercontent.com/lordryns/tmin/main/install.sh)
+bash <(curl -s https://raw.githubusercontent.com/lordryns/tmin/main/termux_install.sh)
 ```
 
 This should install help you set everything up, if it fails you can either:
