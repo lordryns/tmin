@@ -17,7 +17,7 @@ void display_content(struct CompFile comp_f);
 void edit_line(struct CompFile *comp_f, int curr_line);
 void display_line(struct CompFile comp_f, int n_line);
 void save_to_file(struct CompFile comp_f);
-
+void show_number_of_lines(struct CompFile comp_f);
 int main(int charc, char *charv[]) {
   char comm[20];
   if (charc > 1) {
@@ -53,6 +53,11 @@ int main(int charc, char *charv[]) {
         printf("??: wrong usage of i, use i=<line> instead.\n");
       else if (strcmp(comm, "w") == 0) {
         save_to_file(fetch_c);
+      }
+
+
+      else if (strcmp(comm, "ln") == 0) { 
+        show_number_of_lines(fetch_c);
       }
       else
         printf("??: '%s' -> invalid, use [h] for help.\n", comm);
@@ -162,11 +167,15 @@ void show_help() {
   printf("h   -> display this message\n");
   printf("q   -> exit application with 1\n");
   printf("v   -> display the entire file\n");
-  printf("cls -> clear stdin\n\n");
-  printf("w   -> Save file\n");
+  printf("cls -> clear stdin\n");
+  printf("ln  -> Show number of lines\n");
+  printf("w   -> Save file\n\n");
 
   printf("specific commands:\n");
   printf("v=<line>  -> show specific line\n");
   printf("i=<line>  -> insert into line\n");
 }
 
+void show_number_of_lines(struct CompFile comp_f) {
+  printf("len: %d\n", comp_f.len);
+}
