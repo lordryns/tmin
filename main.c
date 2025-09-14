@@ -30,7 +30,7 @@ int main(int charc, char *charv[]) {
       eat_buffer();
 
       if (strcmp(comm, "q") == 0)
-        return 1;
+        return 0;
       else if (strcmp(comm, "cls") == 0)
         clear_term();
       else if (strcmp(comm, "h") == 0) {
